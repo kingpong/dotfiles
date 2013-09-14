@@ -2,7 +2,9 @@
 #
 # bootstrap installs things.
 
-DOTFILES_ROOT="`pwd`"
+DOTFILES_ROOT=$(dirname "$0")
+DOTFILES_ROOT=$(cd "$DOTFILES_ROOT/.."; pwd)
+cd "$DOTFILES_ROOT"
 
 set -e
 
