@@ -1,1 +1,5 @@
 .netrwhist
+**/command-t/Makefile
+**/command-t/*.bundle
+**/command-t/*.o
+**/command-t/*.log
