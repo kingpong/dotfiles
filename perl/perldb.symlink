@@ -1,0 +1,97 @@
+BEGIN { require "perl5db.pl"; }
+package DB;
+
+sub afterinit {
+  $term || &setterm();
+  if ($term && $term->Features->{readHistory}) {
+    $term->ReadHistory("$ENV{HOME}/.perldb_history");
+  }
+  else {
+    print DB::OUT "Terminal history NOT available\n";
+  }
+}
+END {
+  if ($term && $term->Features->{writeHistory}) {
+    $term->WriteHistory("$ENV{HOME}/.perldb_history");
+  }
+}
+
+$window = 30;
+$alias{'stack'}   = 's/^stack/print DB::OUT DB::GetStack(4)/';
+$alias{'run'}     = 's/^run\s+(.*)/;{ no warnings "redefine"; do "$1"; }/';
+$alias{'xxd'}     = 's/^xxd\s+(.*)/DB::XXD($1)/';
+$alias{'d'}       = 's/^d\s+(.*)/DB::datadump($1)/';
+
+binmode(STDOUT,  ":utf8");
+binmode(STDERR,  ":utf8");
+binmode(DB::OUT, ":utf8");
+
+use Memoize;
+use File::Spec::Functions qw(rel2abs canonpath);
+memoize('_getstack_getpath');
+our $PWD;
+BEGIN { $PWD = $ENV{PWD} }
+
+sub _my_rel2abs {
+    my $rel = shift;
+    return $rel if $rel eq '-e';
+    return canonpath(rel2abs($rel =~ m{^/} ? $rel : "$PWD/$rel"));
+}
+
+sub _getstack_getpath ($) {
+    my $path = _my_rel2abs(shift);
+    foreach (@INC, $FindBin::Bin) {
+        local $_ = quotemeta($_);
+        $path =~ s/^$_\///;
+    }
+    return $path;
+}
+
+sub GetStack {
+    my $i = @_ ? shift : 0;
+    my $trace = '';
+    my @calls;
+    while ( my @call = caller($i++) ) {
+        unshift @calls, \@call;
+    }
+    my $lastSub;
+    my $indent = '';
+
+    for (@calls) {
+        my ($callingpackage,$file,$line,$fullsub) = @$_;
+        my ($package,$sub) = ($fullsub =~ /(.*)::(.*)/);
+        $package ||= '';
+        $sub ||= $fullsub;
+        #next if $sub eq '(eval)';
+        $file = _getstack_getpath($file);
+        $trace .= "$indent$fullsub ($file:$line)\n";
+        $lastSub = $sub;
+
+        if ($indent) {
+            $indent = " $indent";
+        }
+        else {
+            $indent = "`-> " unless $indent;
+        }
+    }
+    return $trace;
+}
+
+sub XXD {
+    open(my $XXD, "|xxd");
+    print {$XXD} @_;
+    close($XXD);
+}
+
+sub XML {
+    open(my $XML, "|xml fo");
+    print ${XML} @_;
+    close($XML);
+}
+
+sub datadump {
+  require Data::Dump;
+  print $DB::OUT Data::Dump::dump(@_);
+}
+
+# vim: set filetype=perl :
