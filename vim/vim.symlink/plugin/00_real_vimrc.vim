@@ -37,4 +37,7 @@ let mapleader=","
 
 colorscheme philip
 
+" prevent syntax highlighting on large files
+autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
+
 " vim: set noexpandtab :
