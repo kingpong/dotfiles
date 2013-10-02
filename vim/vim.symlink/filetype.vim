@@ -5,8 +5,11 @@ if exists("did_load_filetypes")
 endif
 
 augroup filetypedetect
+  " LESS CSS
+  au! BufRead,BufNewFile *.less     setfiletype less
+
+  " RUBY
   au! BufRead,BufNewFile Gemfile    setfiletype ruby
   au! BufRead,BufNewFile Rakefile   setfiletype ruby
   au! BufRead,BufNewFile config.ru  setfiletype ruby
-"  au! BufRead,BufNewFile *.xyz    setfiletype xyz
 augroup END
