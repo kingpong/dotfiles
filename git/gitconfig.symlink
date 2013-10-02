@@ -1,0 +1,36 @@
+[user]
+	name = Philip Garrett
+	email = philgarr@gmail.com
+
+[credential]
+	helper = osxkeychain
+
+[alias]
+	st = status
+	unstage = reset HEAD
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	ff = merge --ff-only
+
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+	ui = true
+
+[core]
+	excludesfile = ~/.gitignore
+	editor = vim
+
+[apply]
+	whitespace = nowarn
+
+[mergetool]
+	keepBackup = false
+
+[difftool]
+	prompt = false
+ 
+[push]
+	default = current
+
+# vim:set noet list:
