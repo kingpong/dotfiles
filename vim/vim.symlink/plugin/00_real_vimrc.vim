@@ -23,8 +23,8 @@ set scrolloff=10
 set shiftwidth=4
 set showcmd
 set showmatch
-set softtabstop=4
-set tabstop=4
+set softtabstop=2
+set tabstop=2
 set textwidth=78
 set wrapmargin=8
 
