@@ -5,6 +5,9 @@ if exists("did_load_filetypes")
 endif
 
 augroup filetypedetect
+  " JAVASCRIPT
+  au! BufRead,BufNewFile *.json     setfiletype javascript
+
   " LESS CSS
   au! BufRead,BufNewFile *.less     setfiletype less
 
