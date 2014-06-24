@@ -1,0 +1,6 @@
+#
+# Put settings here that are local to this machine and should not be merged
+# into the upstream dotfiles repo.
+#
+# # for example
+# export AWS_SECRET_KEY=...
