@@ -122,8 +122,19 @@ install_dotfiles () {
   done
 }
 
+ignore_local() {
+  (
+    # ignore changes to ~/.zshlocal
+    cd "$DOTFILES_ROOT"
+    if [[ -e oh-my-zsh/zshlocal.symlink ]]; then
+      git update-index --assume-unchanged oh-my-zsh/zshlocal.symlink
+    fi
+  )
+}
+
 setup_gitconfig
 install_dotfiles
+ignore_local
 
 # If we are on a mac, lets install and setup homebrew
 if [ "$(uname -s)" == "Darwin" ]
