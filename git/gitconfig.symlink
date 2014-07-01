@@ -1,6 +1,6 @@
 [user]
 	name = Philip Garrett
-	email = philgarr@gmail.com
+	email = philip.garrett@icainformatics.com
 
 [credential]
 	helper = osxkeychain
@@ -10,6 +10,7 @@
 	unstage = reset HEAD
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	ff = merge --ff-only
+	mr = merge --no-ff --no-commit --no-squash
 
 [color]
 	diff = auto
