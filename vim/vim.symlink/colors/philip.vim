@@ -83,6 +83,8 @@ highlight SpellRare                 gui=underline guifg=#D75F87 guibg=NONE    ct
 highlight SpellCap                  gui=underline guifg=#D0D0FF guibg=NONE    ctermfg=189  ctermbg=NONE cterm=underline
 highlight MatchParen                gui=NONE      guifg=#FFFFFF guibg=#005f5f ctermfg=15   ctermbg=23   cterm=NONE
 
+highlight PmenuSel                  gui=NONE      guifg=#FFFFFF guibg=#3B6C0C ctermfg=7    ctermbg=22   cterm=NONE
+
 highlight link htmlTag     xmlTag
 highlight link htmlTagName xmlTagName
 highlight link htmlEndTag  xmlEndTag
