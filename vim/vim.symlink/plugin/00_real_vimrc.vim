@@ -1,4 +1,5 @@
 scriptencoding utf-8
+set encoding=utf-8
 
 " adapted from https://github.com/garybernhardt/dotfiles/blob/master/.vimrc
 set autoindent
@@ -39,5 +40,12 @@ colorscheme philip
 
 " prevent syntax highlighting on large files
 autocmd BufReadPre * if getfsize(expand("%")) > 10000000 | syntax off | endif
+
+" remember file position
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+" disable yaml indention nonsense
+" h/t https://stackoverflow.com/a/71319102/161183
+autocmd FileType yaml,yaml.ansible setlocal indentkeys-=0#
 
 " vim: set noexpandtab :
